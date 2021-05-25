@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "views/Home.vue";
+import Home from "./views/Home.vue";
 
 Vue.use(Router);
 
@@ -18,7 +18,7 @@ export default new Router({
       path: "/maps",
       name: "maps",
       component: () =>
-        import(/* webpackChunkName: "Maps"*/ "views/Maps"),
+        import(/* webpackChunkName: "Maps"*/ "./views/Maps"),
       props: true
     },
 
@@ -27,14 +27,14 @@ export default new Router({
       name: "DestinationDetails",
       props: true,
       component: () =>
-        import(/* webpackChunkName: "DestinationDetails"*/ "views/DestinationDetails"),
+        import(/* webpackChunkName: "DestinationDetails"*/ "./views/DestinationDetails"),
       children: [
         {
           path: ":experienceSlug",
           name: "experienceDetails",
           props: true,
           component: () =>
-            import(/*webpackChunkName: "ExperienceDetails"*/ "views/ExperienceDetails")
+            import(/*webpackChunkName: "ExperienceDetails"*/ "./views/ExperienceDetails")
         }
       ]
     }
