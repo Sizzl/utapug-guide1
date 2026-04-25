@@ -1,42 +1,42 @@
-import Vue from "vue";
-import Router from "vue-router";
+import { createRouter, createWebHashHistory } from "vue-router";
 import Home from "./views/Home.vue";
 
-Vue.use(Router);
+const routes = [
+  {
+    path: "/",
+    name: "home",
+    component: Home,
+  },
+  {
+    path: "/maps",
+    name: "maps",
+    component: () => import("./views/Maps.vue"),
+  },
+  {
+    path: "/maps/:slug",
+    name: "destination",
+    component: () => import("./views/DestinationDetails.vue"),
+    props: true,
+  },
+  {
+    path: "/maps/:slug/:experienceSlug",
+    name: "experience",
+    component: () => import("./views/ExperienceDetails.vue"),
+    props: true,
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    redirect: "/",
+  },
+];
 
-export default new Router({
-  mode: "history",
-  linkExactActiveClass: "vue-school-active-class",
-  routes: [
-    {
-      path: "/",
-      name: "home",
-      component: Home,
-      props: true
-    },
-    {
-      path: "/maps",
-      name: "maps",
-      component: () =>
-        import(/* webpackChunkName: "Maps"*/ "./views/Maps"),
-      props: true
-    },
-
-    {
-      path: "/destination/:slug",
-      name: "DestinationDetails",
-      props: true,
-      component: () =>
-        import(/* webpackChunkName: "DestinationDetails"*/ "./views/DestinationDetails"),
-      children: [
-        {
-          path: ":experienceSlug",
-          name: "experienceDetails",
-          props: true,
-          component: () =>
-            import(/*webpackChunkName: "ExperienceDetails"*/ "./views/ExperienceDetails")
-        }
-      ]
-    }
-  ]
+const router = createRouter({
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  linkExactActiveClass: "is-active",
+  routes,
+  scrollBehavior() {
+    return { top: 0 };
+  },
 });
+
+export default router;
