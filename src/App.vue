@@ -1,25 +1,12 @@
 <template>
-  <div id="app">
+  <div class="app-shell">
     <TheNavigation />
-    <router-view :key="$route.path" />
+    <main class="page-shell">
+      <router-view />
+    </main>
   </div>
 </template>
-<script>
-import TheNavigation from "@/components/TheNavigation";
 
-export default {
-  components: {
-    TheNavigation
-  }
-};
+<script setup>
+import TheNavigation from "@/components/TheNavigation.vue";
 </script>
-<style>
-#app {
-  background-color: rgb(30, 29, 53);
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #fefeff;
-}
-</style>
