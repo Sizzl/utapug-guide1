@@ -8,16 +8,13 @@
       <div class="objective-card__body">
         <span class="objective-card__eyebrow">Objective {{ index + 1 }}</span>
         <h3 class="objective-card__title">{{ experience.name }}</h3>
-        <p class="objective-card__description">{{ previewText }}</p>
       </div>
     </router-link>
   </article>
 </template>
 
 <script setup>
-import { computed } from "vue";
-
-const props = defineProps({
+defineProps({
   destinationSlug: {
     type: String,
     required: true,
@@ -34,13 +31,5 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-});
-
-const previewText = computed(() => {
-  if (!props.experience.description) {
-    return "Objective notes are still being expanded for this section of the guide.";
-  }
-
-  return props.experience.description;
 });
 </script>

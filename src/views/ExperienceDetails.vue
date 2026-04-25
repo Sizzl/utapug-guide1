@@ -11,6 +11,13 @@
           Back to {{ destination.name }}
         </router-link>
         <router-link
+          v-if="previousExperience"
+          class="button button--secondary"
+          :to="{ name: 'experience', params: { slug: destination.slug, experienceSlug: previousExperience.slug } }"
+        >
+          Previous objective
+        </router-link>
+        <router-link
           v-if="nextExperience"
           class="button button--primary"
           :to="{ name: 'experience', params: { slug: destination.slug, experienceSlug: nextExperience.slug } }"
@@ -23,25 +30,14 @@
           :src="getAssetUrl(experience.image)"
           :alt="experience.name"
           :caption="`Screenshot reference for ${experience.name}.`"
+          zoomable
         />
       </template>
     </GuideHero>
 
-    <section class="grid-two detail-grid">
+    <section class="stack-md">
       <CalloutPanel eyebrow="Tactic notes" title="Read this with the screenshot open">
         <p>{{ descriptionText }}</p>
-      </CalloutPanel>
-
-      <CalloutPanel eyebrow="Flow" title="Move through the destination">
-        <p>
-          This objective is <strong>{{ objectivePosition }}</strong> for {{ destination.name }}.
-        </p>
-        <p v-if="nextExperience">
-          When you are done here, continue to <strong>{{ nextExperience.name }}</strong> to keep the route context intact.
-        </p>
-        <p v-else>
-          This is the final listed objective for the destination. Jump back to the overview to revisit earlier stages.
-        </p>
       </CalloutPanel>
     </section>
 
@@ -100,6 +96,14 @@ const nextExperience = computed(() => {
   }
 
   return destination.value.experiences[experienceIndex.value + 1] ?? null;
+});
+
+const previousExperience = computed(() => {
+  if (!destination.value || experienceIndex.value <= 0) {
+    return null;
+  }
+
+  return destination.value.experiences[experienceIndex.value - 1] ?? null;
 });
 
 const descriptionText = computed(() => {
